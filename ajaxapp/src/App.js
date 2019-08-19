@@ -10,7 +10,7 @@ export class App {
         this.getUserInfo().then(userInfo => {
             console.log(userInfo);
 
-            const view = `
+            const view = this.escapeHtml`
             <h4>${userInfo.name} (@${userInfo.login})</h4>
             <img src="${userInfo.avatar_url}" alt="${userInfo.login}" height="100">
             <dl>
@@ -22,6 +22,26 @@ export class App {
             `
             userinfoElement.innerHTML = view;
         })
+    }
+
+    escapeSpecialChars(str) {
+        return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    escapeHtml(strings, ...values) {
+        return strings.reduce((result, str, i) => {
+            const value = values[i - 1];
+            if (typeof value === "string") {
+                return result + this.escapeSpecialChars(value) + str;
+            } else {
+                return result + String(value) + str;
+            }
+        });
     }
 
     getUserInfo() {
