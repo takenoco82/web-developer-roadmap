@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrapを使うためのcss -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- レスポンシブデザイン確認用のcss -->
+    <link rel="stylesheet" href="./css/main.css">
+    <title>CSS Bootstrap</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Bootstrapの使い方</h1>
+        <p>参考: <a href="https://getbootstrap.com/docs/4.3/layout/overview/">Overview · Bootstrap</a></p>
+    </div>
+
+    <section class="container p-3">
+        <h2>Layout</h2>
+        <div class="container p-3">
+            <h3>Overview</h3>
+            <div class="bg-success">
+                <div class="bg-warning contents">bg-primary</div>
+            </div>
+        </div>
+        <div class="container p-3">
+            <h3>Grid</h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm bg-warning border text-center">One of three colums</div>
+                    <div class="col-sm bg-warning border text-center">One of three colums</div>
+                    <div class="col-sm bg-warning border text-center">One of three colums</div>
+                </div>
+                <div class="row">
+                    <div class="col bg-warning border text-center">1 of 2</div>
+                    <div class="col bg-warning border text-center">2 of 2</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container p-3">
+        <h2>Content</h2>
+        <div class="container p-3">
+            <h3>Typography</h3>
+            <p class="h1">h1. Bootstrap heading</p>
+            <p class="h2">h2. Bootstrap heading</p>
+            <p class="h3">h3. Bootstrap heading</p>
+            <p class="h4">h4. Bootstrap heading</p>
+            <p class="h5">h5. Bootstrap heading</p>
+            <p class="h6">h6. Bootstrap heading</p>
+        </div>
+        <div class="container p-3">
+            <h3>Images</h3>
+            <img src="./images/1000x500.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="container p-3">
+            <h3>Tables</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="container p-3">
+        <h2>Components</h2>
+        <div class="container p-3">
+            <h3>Alerts</h3>
+            <div class="alert alert-primary">primary</div>
+            <div class="alert alert-secondary">secondary</div>
+            <div class="alert alert-success">success</div>
+            <div class="alert alert-danger">danger</div>
+            <div class="alert alert-warning">warning</div>
+            <div class="alert alert-info">info</div>
+            <div class="alert alert-light">light</div>
+            <div class="alert alert-dark">dark</div>
+        </div>
+    </section>
+
+    <!-- Bootstrapを使うためのJavaScript -->
+    <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
