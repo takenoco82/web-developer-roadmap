@@ -13,9 +13,11 @@ export class App {
     handleLoaded() {
         const reposElement = document.querySelector("#repos");
         this.searchRepositries().then(repositries => {
-            repositries.forEach(repositry => {
+            repositries.forEach((repositry, index) => {
                 console.debug(repositry);
-                const html = `<li><a href="${repositry.html_url}">${repositry.name}</a> (⭐${repositry.stargazers_count})</li>`
+                const html = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>${index + 1}. <a href="${repositry.html_url}">${repositry.owner.login}/${repositry.name}</a></span>
+                    <span class="badge badge-primary badge-pill">⭐${repositry.stargazers_count}</span></li>`
                 const liElement = this.html2Element(html);
                 reposElement.appendChild(liElement);
             });

@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrapを使うためのcss -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <title>GitHub Top10 Repositories</title>
 </head>
 <body>
-    <header>GitHub Top10 Repositories</header>
-    <article><ol id="repos"></ol></article>
+    <div class="container p-3">
+        <div class="jumbotron">
+            <header class="h1 display-4">GitHub Top10 Repositories</header>
+            <p class="lead">This is a sample.</p>
+        </div>
+        <div>
+            <article><ol class="list-group" id="repos"></ol></article>
+        </div>
+    </div>
     <script type="module" src="index.js"></script>
+    <!-- Bootstrapを使うためのJavaScript -->
+    <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
