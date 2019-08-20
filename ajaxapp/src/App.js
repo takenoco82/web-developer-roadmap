@@ -5,6 +5,15 @@ export class App {
 
     mount() {
         console.log("mount");
+        document.addEventListener("DOMContentLoaded", () => {
+            const getUserinfoButton = document.querySelector("#getUserInfo");
+            getUserinfoButton.addEventListener("click", () => {
+                this.handleGetUserInfoButton();
+            });
+        });
+    }
+
+    handleGetUserInfoButton() {
         const userinfoElement = document.querySelector("#userinfo");
 
         this.getUserInfo().then(userInfo => {
@@ -21,7 +30,7 @@ export class App {
             </dl>
             `
             userinfoElement.innerHTML = view;
-        })
+        });
     }
 
     escapeSpecialChars(str) {
