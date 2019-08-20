@@ -14,12 +14,15 @@ export class App {
     }
 
     handleGetUserInfoButton() {
-        const userinfoElement = document.querySelector("#userinfo");
-
         this.getUserInfo().then(userInfo => {
             console.log(userInfo);
+            const view = this.createView(userInfo);
+            this.displayView(view);
+        });
+    }
 
-            const view = this.escapeHtml`
+    createView(userInfo) {
+        return this.escapeHtml`
             <h4>${userInfo.name} (@${userInfo.login})</h4>
             <img src="${userInfo.avatar_url}" alt="${userInfo.login}" height="100">
             <dl>
@@ -28,9 +31,12 @@ export class App {
                 <dt>Repositories</dt>
                 <dd>${userInfo.public_repos}</dd>
             </dl>
-            `
-            userinfoElement.innerHTML = view;
-        });
+            `;
+    }
+
+    displayView(view) {
+        const userinfoElement = document.querySelector("#userinfo");
+        userinfoElement.innerHTML = view;
     }
 
     escapeSpecialChars(str) {
