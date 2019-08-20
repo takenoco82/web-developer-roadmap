@@ -14,7 +14,9 @@ export class App {
     }
 
     handleGetUserInfoButton() {
-        this.getUserInfo().then(userInfo => {
+        const userIdElement = document.querySelector("#userId");
+
+        this.getUserInfo(userIdElement.value).then(userInfo => {
                 console.debug(userInfo);
                 return this.createView(userInfo);
             }).then(view => {
@@ -62,8 +64,7 @@ export class App {
         });
     }
 
-    getUserInfo() {
-        const userId = "js-primer-example";
+    getUserInfo(userId) {
         const url = `https://api.github.com/users/${userId}`;
         return fetch(url).then(response => {
             console.debug(response.status);
