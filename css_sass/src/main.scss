@@ -1,6 +1,9 @@
 div {
     background-color: lightgray;
     margin: 0 auto;
+    .container {
+        width: 800px;
+    }
     p {
         padding: 0 0 0 10px;
         span {
