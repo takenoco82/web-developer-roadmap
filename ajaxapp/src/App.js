@@ -13,17 +13,17 @@ export class App {
         });
     }
 
-    handleGetUserInfoButton() {
+    async handleGetUserInfoButton() {
         const userIdElement = document.querySelector("#userId");
 
-        this.getUserInfo(userIdElement.value).then(userInfo => {
-                console.debug(userInfo);
-                return this.createView(userInfo);
-            }).then(view => {
-                return this.displayView(view)
-            }).catch(error => {
-                console.error(error.message);
-            });
+        try {
+            const userInfo = await this.getUserInfo(userIdElement.value);
+            console.debug(userInfo);
+            const view = this.createView(userInfo);
+            this.displayView(view);
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 
     createView(userInfo) {
