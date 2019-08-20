@@ -15,10 +15,13 @@ export class App {
 
     handleGetUserInfoButton() {
         this.getUserInfo().then(userInfo => {
-            console.log(userInfo);
-            const view = this.createView(userInfo);
-            this.displayView(view);
-        });
+                console.debug(userInfo);
+                return this.createView(userInfo);
+            }).then(view => {
+                return this.displayView(view)
+            }).catch(error => {
+                console.error(error.message);
+            });
     }
 
     createView(userInfo) {
