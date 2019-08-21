@@ -3,6 +3,18 @@
     @return round($value * 2);
 }
 
+// ミックスインの定義
+@mixin box($color: black, $width, $height) {
+    border: 1px dotted $color;
+    width: $width;
+    height: $height;
+}
+
+#menu {
+    @include box(blue, 800px, 100px);
+    margin: 10px;
+}
+
 div {
     // 変数の定義
     $div-margin: 0;
