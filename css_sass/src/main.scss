@@ -1,8 +1,12 @@
 div {
+    // 変数の定義
+    $div-margin: 0;
+    $container-width: 800px;
+
     background-color: lightgray;
-    margin: 0 auto;
+    margin: $div-margin auto;
     .container {
-        width: 800px;
+        width: $container-width;
     }
     p {
         padding: 0 0 0 10px;
