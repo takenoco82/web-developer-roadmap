@@ -1,3 +1,8 @@
+// 関数の定義
+@function Double($value) {
+    @return round($value * 2);
+}
+
 div {
     // 変数の定義
     $div-margin: 0;
@@ -7,6 +12,13 @@ div {
     margin: $div-margin auto;
     .container {
         width: $container-width;
+    }
+    .box-double {
+        width: Double(300px);
+        padding: 10px;
+    }
+    .bg-blue {
+        background-color: dodgerblue;
     }
     p {
         padding: 0 0 0 10px;
