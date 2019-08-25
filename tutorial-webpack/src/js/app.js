@@ -1,3 +1,4 @@
+import $ from "jquery";
 import { addCalc } from "./modules/addition-calculator";
 import { taxCalc } from "./modules/tax-calculator";
 
@@ -9,3 +10,4 @@ const tax = 1.08;
 const priceIncludeTax = taxCalc(totalPrice, tax);
 
 console.log(`税込価格=${priceIncludeTax}`);
+$('body').html(priceIncludeTax);
