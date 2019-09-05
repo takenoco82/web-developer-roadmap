@@ -17,6 +17,9 @@ module.exports = {
     // 出力先のパス（絶対パスを指定する必要がある）
     path: path.join(__dirname, 'public/js')
   },
+  // SourceMapを出力する
+  //   developmentモードで有効になる devtool: "eval" を上書きする
+  devtool: "source-map",
   // モジュールの設定
   module: {
     rules: [
