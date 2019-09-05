@@ -31,6 +31,17 @@ module.exports = {
         options: {
           presets: [['@babel/preset-env', { modules: false }]]
         }
+      },
+      // eslint-loader
+      {
+        test: /\.js$/,
+        exclude: [
+          path.resolve(__dirname, "node_modules")
+        ],
+        // enforce: 'pre'を指定することによって、指定されてないローダーより早く処理が実行される
+        // 今回は babel-loader で変換する前にコードを検証したいので、指定が必要
+        enforce: "pre",
+        loader: "eslint-loader"
       }
     ]
   }
