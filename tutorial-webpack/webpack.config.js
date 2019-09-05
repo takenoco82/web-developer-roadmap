@@ -1,3 +1,6 @@
+// プラグインを利用するために webpack を読み込んでおく
+const webpack = require("webpack");
+
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
 
@@ -44,5 +47,14 @@ module.exports = {
         loader: "eslint-loader"
       }
     ]
-  }
+  },
+  // プラグインの設定
+  plugins: [
+    // ProvidePlugin
+    //   指定したモジュールをすべてのファイル（モジュール）の変数として利用可能にするプラグイン。
+    //   利用可能にしたモジュールは import などで読み込む必要がなくなる。
+    new webpack.ProvidePlugin({
+      $: "jquery"
+    })
+  ]
 };

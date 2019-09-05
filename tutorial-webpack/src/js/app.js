@@ -1,4 +1,4 @@
-import $ from "jquery";
+// import $ from "jquery";
 import { addCalc } from "./modules/addition-calculator";
 import { taxCalc } from "./modules/tax-calculator";
 
