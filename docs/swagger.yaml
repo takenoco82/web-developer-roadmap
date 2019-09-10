@@ -1,0 +1,204 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a sample."
+  version: "1.0.0"
+  title: "Sandbox"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+  - name: "users"
+schemes:
+  - "http"
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  WriteUser:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        minLength: 1
+        maxLength: 64
+      email:
+        type: "string"
+        minLength: 1
+        maxLength: 256
+    example:
+      username: "alice"
+      email: "alice@example.com"
+    required:
+      - username
+      - email
+  ReadUser:
+    type: "object"
+    properties:
+      user_id:
+        type: "string"
+      username:
+        type: "string"
+      email:
+        type: "string"
+    example:
+      user_id: "592f11060f95a3d3d46a987a"
+      username: "alice"
+      email: "alice@example.com"
+  ReadUsers:
+    type: "object"
+    properties:
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/ReadUser"
+  Errors:
+    type: "object"
+    properties:
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/Error"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      field:
+        type: "string"
+      message:
+        type: "string"
+paths:
+  /users:
+    post:
+      tags:
+        - "users"
+      summary: "Create a new user."
+      description: ""
+      operationId: "post_user"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Created user object"
+          required: true
+          schema:
+            $ref: "#/definitions/WriteUser"
+      responses:
+        201:
+          description: "Create"
+          schema:
+            $ref: "#/definitions/ReadUser"
+        400:
+          $ref: "#/responses/BadRequest"
+        404:
+          $ref: "#/responses/NotFound"
+      security:
+      - api_key: []
+    get:
+      tags:
+        - "users"
+      summary: "Lists users."
+      description: ""
+      operationId: "get_users"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "sort"
+          required: false
+          type: "string"
+          enum:
+            - user_id
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReadUsers"
+      security:
+      - api_key: []
+  /users/{user_id}:
+    get:
+      tags:
+        - "users"
+      summary: "Get the user."
+      description: ""
+      operationId: "get_user"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/PathUserId"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReadUser"
+        404:
+          $ref: "#/responses/NotFound"
+      security:
+      - api_key: []
+    put:
+      tags:
+        - "users"
+      summary: "Update the user."
+      description: ""
+      operationId: "put_user"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/PathUserId"
+        - in: "body"
+          name: "body"
+          description: "Updated user object"
+          required: true
+          schema:
+            $ref: "#/definitions/WriteUser"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReadUser"
+        400:
+          $ref: "#/responses/BadRequest"
+        404:
+          $ref: "#/responses/NotFound"
+      security:
+      - api_key: []
+    delete:
+      tags:
+        - "users"
+      summary: "Delete the user."
+      description: ""
+      operationId: "delete_user"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/PathUserId"
+      responses:
+        204:
+          $ref: "#/responses/NoContent"
+        404:
+          $ref: "#/responses/NotFound"
+      security:
+      - api_key: []
+parameters:
+  PathUserId:
+    in: "path"
+    name: "user_id"
+    required: true
+    type: "string"
+    x-example: "592f11060f95a3d3d46a987a"
+responses:
+  NoContent:
+    description: "No Content"
+  BadRequest:
+    description: "Bad Request"
+    schema:
+      $ref: "#/definitions/Errors"
+  NotFound:
+    description: "Not Found"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
