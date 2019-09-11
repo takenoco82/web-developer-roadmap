@@ -1,0 +1,233 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a sample."
+  version: "1.0.0"
+  title: "Sandbox"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+- name: "users"
+schemes:
+- "http"
+paths:
+  /users:
+    get:
+      tags:
+      - "users"
+      summary: "Lists users."
+      description: ""
+      operationId: "get_users"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "sort"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "user_id"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReadUsers"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Users"
+    post:
+      tags:
+      - "users"
+      summary: "Create a new user."
+      description: ""
+      operationId: "post_user"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/WriteUser"
+      responses:
+        201:
+          description: "Create"
+          schema:
+            $ref: "#/definitions/ReadUser"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Errors"
+        404:
+          description: "Not Found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Users"
+  /users/{user_id}:
+    get:
+      tags:
+      - "users"
+      summary: "Get the user."
+      description: ""
+      operationId: "get_user"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-example: "592f11060f95a3d3d46a987a"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReadUser"
+        404:
+          description: "Not Found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Users"
+    put:
+      tags:
+      - "users"
+      summary: "Update the user."
+      description: ""
+      operationId: "put_user"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-example: "592f11060f95a3d3d46a987a"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/WriteUser"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReadUser"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Errors"
+        404:
+          description: "Not Found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Users"
+    delete:
+      tags:
+      - "users"
+      summary: "Delete the user."
+      description: ""
+      operationId: "delete_user"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-example: "592f11060f95a3d3d46a987a"
+      responses:
+        204:
+          description: "No Content"
+        404:
+          description: "Not Found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Users"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  WriteUser:
+    type: "object"
+    required:
+    - "email"
+    - "username"
+    properties:
+      username:
+        type: "string"
+        minLength: 1
+        maxLength: 64
+      email:
+        type: "string"
+        minLength: 1
+        maxLength: 256
+    example:
+      username: "alice"
+      email: "alice@example.com"
+  ReadUser:
+    type: "object"
+    properties:
+      user_id:
+        type: "string"
+      username:
+        type: "string"
+      email:
+        type: "string"
+    example:
+      user_id: "592f11060f95a3d3d46a987a"
+      username: "alice"
+      email: "alice@example.com"
+  ReadUsers:
+    type: "object"
+    properties:
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/ReadUser"
+    example:
+      users:
+      - user_id: "592f11060f95a3d3d46a987a"
+        username: "alice"
+        email: "alice@example.com"
+      - user_id: "592f11060f95a3d3d46a987a"
+        username: "alice"
+        email: "alice@example.com"
+  Errors:
+    type: "object"
+    properties:
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/Error"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      field:
+        type: "string"
+      message:
+        type: "string"
+parameters:
+  PathUserId:
+    name: "user_id"
+    in: "path"
+    required: true
+    type: "string"
+    x-example: "592f11060f95a3d3d46a987a"
+responses:
+  BadRequest:
+    description: "Bad Request"
+    schema:
+      $ref: "#/definitions/Errors"
+  NoContent:
+    description: "No Content"
+  NotFound:
+    description: "Not Found"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
