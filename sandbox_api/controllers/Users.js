@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var Users = require('../service/UsersService');
 
-module.exports.delete_user = function delete_user (req, res, next) {
+module.exports.delete_user = function delete_user(req, res, next) {
   var user_id = req.swagger.params['user_id'].value;
   Users.delete_user(user_id)
     .then(function (response) {
@@ -14,18 +14,19 @@ module.exports.delete_user = function delete_user (req, res, next) {
     });
 };
 
-module.exports.get_user = function get_user (req, res, next) {
+module.exports.get_user = function get_user(req, res, next) {
   var user_id = req.swagger.params['user_id'].value;
   Users.get_user(user_id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
-    .catch(function (response) {
-      utils.writeJson(res, response);
+    .catch(function (response, code) {
+      console.log(`response=${response}, code=${code}`);
+      utils.writeJson(res, response, 404);
     });
 };
 
-module.exports.get_users = function get_users (req, res, next) {
+module.exports.get_users = function get_users(req, res, next) {
   var sort = req.swagger.params['sort'].value;
   Users.get_users(sort)
     .then(function (response) {
@@ -36,7 +37,7 @@ module.exports.get_users = function get_users (req, res, next) {
     });
 };
 
-module.exports.post_user = function post_user (req, res, next) {
+module.exports.post_user = function post_user(req, res, next) {
   var body = req.swagger.params['body'].value;
   Users.post_user(body)
     .then(function (response) {
@@ -47,10 +48,10 @@ module.exports.post_user = function post_user (req, res, next) {
     });
 };
 
-module.exports.put_user = function put_user (req, res, next) {
+module.exports.put_user = function put_user(req, res, next) {
   var user_id = req.swagger.params['user_id'].value;
   var body = req.swagger.params['body'].value;
-  Users.put_user(user_id,body)
+  Users.put_user(user_id, body)
     .then(function (response) {
       utils.writeJson(res, response);
     })

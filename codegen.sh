@@ -20,7 +20,7 @@ docker run \
     -l javascript \
     -i /local/docs/swagger.yaml \
     -o /local/${SANDBOX_CLI_DIR_NAME} \
-    --additional-properties usePromises=true,useES6=true
+    --additional-properties usePromises=true
 
 # テストは削除する
 rm -rf ${SANDBOX_CLI_DIR}/test

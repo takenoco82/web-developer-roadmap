@@ -21,22 +21,22 @@ Delete the user.
 
 ### Example
 ```javascript
-import Sandbox from 'sandbox';
-let defaultClient = Sandbox.ApiClient.instance;
+var Sandbox = require('sandbox');
+var defaultClient = Sandbox.ApiClient.instance;
 
 // Configure API key authorization: api_key
-let api_key = defaultClient.authentications['api_key'];
+var api_key = defaultClient.authentications['api_key'];
 api_key.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //api_key.apiKeyPrefix = 'Token';
 
-let apiInstance = new Sandbox.UsersApi();
+var apiInstance = new Sandbox.UsersApi();
 
-let userId = "\"592f11060f95a3d3d46a987a\""; // String | 
+var userId = "\"592f11060f95a3d3d46a987a\""; // String | 
 
-apiInstance.deleteUser(userId).then(() => {
+apiInstance.deleteUser(userId).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -71,22 +71,22 @@ Get the user.
 
 ### Example
 ```javascript
-import Sandbox from 'sandbox';
-let defaultClient = Sandbox.ApiClient.instance;
+var Sandbox = require('sandbox');
+var defaultClient = Sandbox.ApiClient.instance;
 
 // Configure API key authorization: api_key
-let api_key = defaultClient.authentications['api_key'];
+var api_key = defaultClient.authentications['api_key'];
 api_key.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //api_key.apiKeyPrefix = 'Token';
 
-let apiInstance = new Sandbox.UsersApi();
+var apiInstance = new Sandbox.UsersApi();
 
-let userId = "\"592f11060f95a3d3d46a987a\""; // String | 
+var userId = "\"592f11060f95a3d3d46a987a\""; // String | 
 
-apiInstance.getUser(userId).then((data) => {
+apiInstance.getUser(userId).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -121,23 +121,23 @@ Lists users.
 
 ### Example
 ```javascript
-import Sandbox from 'sandbox';
-let defaultClient = Sandbox.ApiClient.instance;
+var Sandbox = require('sandbox');
+var defaultClient = Sandbox.ApiClient.instance;
 
 // Configure API key authorization: api_key
-let api_key = defaultClient.authentications['api_key'];
+var api_key = defaultClient.authentications['api_key'];
 api_key.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //api_key.apiKeyPrefix = 'Token';
 
-let apiInstance = new Sandbox.UsersApi();
+var apiInstance = new Sandbox.UsersApi();
 
-let opts = { 
+var opts = { 
   'sort': "sort_example" // String | 
 };
-apiInstance.getUsers(opts).then((data) => {
+apiInstance.getUsers(opts).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -172,22 +172,22 @@ Create a new user.
 
 ### Example
 ```javascript
-import Sandbox from 'sandbox';
-let defaultClient = Sandbox.ApiClient.instance;
+var Sandbox = require('sandbox');
+var defaultClient = Sandbox.ApiClient.instance;
 
 // Configure API key authorization: api_key
-let api_key = defaultClient.authentications['api_key'];
+var api_key = defaultClient.authentications['api_key'];
 api_key.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //api_key.apiKeyPrefix = 'Token';
 
-let apiInstance = new Sandbox.UsersApi();
+var apiInstance = new Sandbox.UsersApi();
 
-let body = new Sandbox.WriteUser(); // WriteUser | Created user object
+var body = new Sandbox.WriteUser(); // WriteUser | Created user object
 
-apiInstance.postUser(body).then((data) => {
+apiInstance.postUser(body).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -222,24 +222,24 @@ Update the user.
 
 ### Example
 ```javascript
-import Sandbox from 'sandbox';
-let defaultClient = Sandbox.ApiClient.instance;
+var Sandbox = require('sandbox');
+var defaultClient = Sandbox.ApiClient.instance;
 
 // Configure API key authorization: api_key
-let api_key = defaultClient.authentications['api_key'];
+var api_key = defaultClient.authentications['api_key'];
 api_key.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //api_key.apiKeyPrefix = 'Token';
 
-let apiInstance = new Sandbox.UsersApi();
+var apiInstance = new Sandbox.UsersApi();
 
-let userId = "\"592f11060f95a3d3d46a987a\""; // String | 
+var userId = "\"592f11060f95a3d3d46a987a\""; // String | 
 
-let body = new Sandbox.WriteUser(); // WriteUser | Updated user object
+var body = new Sandbox.WriteUser(); // WriteUser | Updated user object
 
-apiInstance.putUser(userIdbody).then((data) => {
+apiInstance.putUser(userIdbody).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
