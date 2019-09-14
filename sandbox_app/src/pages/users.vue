@@ -1,12 +1,22 @@
 <template>
-  <div class="about">
+  <div>
     <h1>This is The users page</h1>
-    <v-btn @click="get_users">Button</v-btn>
-    <ul>
-      <li v-for="user in users" :key="user.user_id">
-        {{user.username}}
-      </li>
-    </ul>
+    <v-container>
+      <div>
+        <v-data-table
+          :headers="headers"
+          :items="users"
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          hide-default-footer
+          class="elevation-1"
+          @page-count="pageCount = $event"
+        ></v-data-table>
+        <div class="text-center pt-2">
+          <v-pagination v-model="page" :length="pageCount"></v-pagination>
+        </div>
+      </div>
+    </v-container>
   </div>
 </template>
 
@@ -14,13 +24,21 @@
 import Sandbox from "sandbox";
 
 export default {
-  data: () => {
+  data() {
     return {
-      users: []
+      users: [],
+      page: 1,
+      pageCount: 0,
+      itemsPerPage: 10,
+      headers: [
+        { text: 'id', value: 'user_id' },
+        { text: 'user name', value: 'username' },
+        { text: 'e-mail address', value: 'email' },
+      ],
     }
   },
   methods: {
-    get_users() {
+    getUsers() {
       const defaultClient = Sandbox.ApiClient.instance;
 
       // Configure API key authorization: api_key
@@ -31,13 +49,20 @@ export default {
 
       const apiInstance = new Sandbox.UsersApi()
       const opts = {};
-      apiInstance.getUsers(opts).then(data => {
+      return apiInstance.getUsers(opts).then(data => {
         console.log('API called successfully. Returned data: ' + data);
-        this.users = data.users
+        return data.users;
       }).catch(error => {
         console.error(error);
+        throw error;
       });
     }
+  },
+  // created で arrow関数を使うと メソッドが this で呼び出せなくなる？
+  created() {
+    this.getUsers().then(users => {
+      this.users = users;
+    });
   }
 }
 </script>
