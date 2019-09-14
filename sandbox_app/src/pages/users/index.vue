@@ -11,7 +11,11 @@
           hide-default-footer
           class="elevation-1"
           @page-count="pageCount = $event"
-        ></v-data-table>
+        >
+          <template v-slot:item.user_id="{ item }">
+            <router-link v-bind:to=item.url>{{ item.user_id }}</router-link>
+          </template>
+        </v-data-table>
         <div class="text-center pt-2">
           <v-pagination v-model="page" :length="pageCount"></v-pagination>
         </div>
@@ -61,7 +65,10 @@ export default {
   // created で arrow関数を使うと メソッドが this で呼び出せなくなる？
   created() {
     this.getUsers().then(users => {
-      this.users = users;
+      this.users = users.map(user => {
+        user.url = `/users/${user.user_id}`;
+        return user;
+      });
     });
   }
 }
