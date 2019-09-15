@@ -13,6 +13,11 @@
           @page-count="pageCount = $event"
         >
           <template v-slot:item.user_id="{ item }">
+            <span class="pr-2">
+              <v-avatar color="indigo" size="24">
+                <span class="white--text">{{ item.avatar_text }}</span>
+              </v-avatar>
+            </span>
             <router-link v-bind:to=item.url>{{ item.user_id }}</router-link>
           </template>
         </v-data-table>
@@ -67,6 +72,8 @@ export default {
     this.getUsers().then(users => {
       this.users = users.map(user => {
         user.url = `/users/${user.user_id}`;
+        // username = 'Yvette Ebert' -> avatar_text = 'YE'
+        user.avatar_text = user.username.split(" ").map(item => item.substring(0, 1)).join("");
         return user;
       });
     });
