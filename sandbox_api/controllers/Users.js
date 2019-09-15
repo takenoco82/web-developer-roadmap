@@ -43,8 +43,8 @@ module.exports.post_user = function post_user(req, res, next) {
     .then(payload => {
       utils.writeJson(res, payload, 201);
     })
-    .catch(function (response) {
-      utils.writeJson(res, response);
+    .catch(({ code, payload }) => {
+      utils.writeJson(res, payload, code);
     });
 };
 

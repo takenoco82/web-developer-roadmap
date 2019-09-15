@@ -25,6 +25,11 @@
           <v-pagination v-model="page" :length="pageCount"></v-pagination>
         </div>
       </div>
+      <div>
+        <v-btn class="mx-2" fab dark color="indigo" to="/users/new">
+          <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+      </div>
     </v-container>
   </div>
 </template>

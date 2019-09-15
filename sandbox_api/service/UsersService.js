@@ -454,13 +454,26 @@ exports.get_users = function (sort) {
  **/
 exports.post_user = function (body) {
   return new Promise(function (resolve, reject) {
-    const user = {
-      user_id: getUniqueStr(),
-      username: body.username,
-      email: body.email
-    };
-    users.push(user);
-    resolve(user);
+    if (users.some(item => item.email === body.email)) {
+      const payload = {
+        "errors": [
+          {
+            "code": "duplicated",
+            "field": "email",
+            "message": "Duplicated sent email."
+          }
+        ]
+      }
+      reject({ code: 400, payload: payload });
+    } else {
+      const user = {
+        user_id: getRandomStr(24),
+        username: body.username,
+        email: body.email
+      };
+      users.push(user);
+      resolve({ code: 201, payload: user });
+    }
   });
 }
 
@@ -489,8 +502,7 @@ exports.put_user = function (user_id, body) {
 }
 
 
-function getUniqueStr(myStrong) {
-  var strong = 1000;
-  if (myStrong) strong = myStrong;
-  return new Date().getTime().toString(24) + Math.floor(strong * Math.random()).toString(16)
+function getRandomStr(length = 24) {
+  const S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  return Array.from(Array(length)).map(() => S[Math.floor(Math.random() * S.length)]).join('');
 }
