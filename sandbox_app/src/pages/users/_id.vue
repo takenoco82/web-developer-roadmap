@@ -23,6 +23,9 @@
               <v-btn dark icon class="mr-4">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
+              <v-btn dark icon class="mr-4" @click="deleteUser">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
             </v-card-title>
 
             <div class="flex-grow-1"></div>
@@ -86,6 +89,19 @@ export default {
       return apiInstance.getUser(userId).then(data => {
         console.log('API called successfully. Returned data: ' + data);
         return data;
+      }).catch(error => {
+        console.error(error);
+        throw error;
+      });
+    },
+    deleteUser() {
+      const defaultClient = Sandbox.ApiClient.instance;
+
+      const apiInstance = new Sandbox.UsersApi();
+      return apiInstance.deleteUser(this.user_id).then(() => {
+        console.log('API called successfully. UsersApi.deleteUser');
+        // 削除に成功したら一覧画面に遷移する
+        this.$router.push("/users");
       }).catch(error => {
         console.error(error);
         throw error;

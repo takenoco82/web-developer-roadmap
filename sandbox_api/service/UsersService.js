@@ -402,6 +402,8 @@ exports.delete_user = function (user_id) {
     if (user === undefined) {
       reject({ code: 404, payload: null });
     } else {
+      const pos = users.indexOf(user);
+      users.splice(pos, 1);
       resolve();
     }
   });
