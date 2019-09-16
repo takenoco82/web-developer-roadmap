@@ -24,7 +24,9 @@
               v-model="email"
               label="e-mail"
               required
-            ></v-text-field>
+            >
+            </v-text-field>
+            <ErrorMessage v-bind:errors=errors field="email" />
           </v-card-text>
         </v-card>
       </v-form>
@@ -34,12 +36,14 @@
 
 <script>
 import Sandbox from "sandbox";
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default {
   data() {
     return {
       username: "",
-      email: ""
+      email: "",
+      errors: []
     }
   },
   methods: {
@@ -48,6 +52,10 @@ export default {
       this.postUser(this.username, this.email).then(user => {
         console.log(user);
         this.$router.push("/users");
+      }).catch(error => {
+        // TODO ホントは400 BadRequest の場合だけやるとか色々ある
+        const errResponse = JSON.parse(error.response.text);
+        this.errors = errResponse.errors;
       });
     },
     postUser(username, email) {
@@ -66,6 +74,9 @@ export default {
         throw error;
       });
     },
+  },
+  components: {
+    ErrorMessage
   }
 }
 </script>
