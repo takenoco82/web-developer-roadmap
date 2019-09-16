@@ -13,12 +13,8 @@
           @page-count="pageCount = $event"
         >
           <template v-slot:item.user_id="{ item }">
-            <span class="pr-2">
-              <v-avatar color="indigo" size="24">
-                <span class="white--text">{{ item.avatar_text }}</span>
-              </v-avatar>
-            </span>
-            <router-link v-bind:to=item.url>{{ item.user_id }}</router-link>
+            <UserEdit :user-id=item.user_id />
+            {{ item.user_id }}
           </template>
         </v-data-table>
         <div class="text-center pt-2">
@@ -34,10 +30,12 @@
 <script>
 import Sandbox from "sandbox";
 import UserNew from "@/components/UserNew";
+import UserEdit from "@/components/UserEdit";
 
 export default {
   components: {
-    UserNew
+    UserNew,
+    UserEdit
   },
   data() {
     return {
