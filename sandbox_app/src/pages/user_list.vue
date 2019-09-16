@@ -134,49 +134,36 @@ export default {
       this.editedItem.email = item.email;
       this.dialog = true;
     },
-    deleteItem(item) {
-      console.log(item);
+    async deleteItem(item) {
       if (confirm('Are you sure you want to delete this item?')) {
-        this.deleteUser(item.user_id).then(() => {
-          this.initialize();
-        })
+        await this.deleteUser(item.user_id);
+        await this.initialize();
       }
     },
-    saveItem() {
+    async saveItem() {
       console.log("click save");
       // API実行前にエラーをクリアする
       this.resetErrors();
 
-      if (this.editedItem.userId === "") {
-        this.postUser(this.editedItem).then(user => {
-          console.log(user);
+      try {
+        if (this.editedItem.userId === "") {
+          const user = await this.postUser(this.editedItem);
+        } else {
+          const user = await this.putUser(this.editedItem);
+        }
 
-          // 後処理
-          this.cleanUp();
-        }).catch(error => {
-          // TODO ホントは400 BadRequest の場合だけやるとか色々ある
-          const errResponse = JSON.parse(error.response.text);
-          // APIからかえってきたエラーメッセージを設定
-          errResponse.errors.map(error => {
-            this.errors[error.field] = error.message;
-          });
-          console.log(this.errors);
-        });
-      } else {
-        this.putUser(this.editedItem).then(user => {
-          console.log(user);
+        // 後処理
+        await this.cleanUp();
+      } catch (error) {
+        console.error(error);
 
-          // 後処理
-          this.cleanUp();
-        }).catch(error => {
-          // TODO ホントは400 BadRequest の場合だけやるとか色々ある
-          const errResponse = JSON.parse(error.response.text);
-          // APIからかえってきたエラーメッセージを設定
-          errResponse.errors.map(error => {
-            this.errors[error.field] = error.message;
-          });
-          console.log(this.errors);
+        // TODO ホントは400 BadRequest の場合だけやるとか色々ある
+        const errResponse = JSON.parse(error.response.text);
+        // APIからかえってきたエラーメッセージを設定
+        errResponse.errors.map(error => {
+          this.errors[error.field] = error.message;
         });
+        console.log(this.errors);
       }
     },
     getUsers() {
@@ -193,9 +180,6 @@ export default {
       return apiInstance.getUsers(opts).then(data => {
         console.log('API called successfully. Returned data: ' + data);
         return data.users;
-      }).catch(error => {
-        console.error(error);
-        throw error;
       });
     },
     postUser(editedItem) {
@@ -209,9 +193,6 @@ export default {
       return apiInstance.postUser(body).then(data => {
         console.log('API called successfully. UsersApi.postUser');
         return data;
-      }).catch(error => {
-        console.error(error);
-        throw error;
       });
     },
     putUser(editedItem) {
@@ -225,9 +206,6 @@ export default {
       return apiInstance.putUser(editedItem.userId, body).then(data => {
         console.log('API called successfully. UsersApi.putUser');
         return data;
-      }).catch(error => {
-        console.error(error);
-        throw error;
       });
     },
     deleteUser(userId) {
@@ -237,9 +215,6 @@ export default {
       return apiInstance.deleteUser(userId).then(() => {
         console.log('API called successfully. UsersApi.deleteUser');
         return "";
-      }).catch(error => {
-        console.error(error);
-        throw error;
       });
     },
     resetErrors() {
