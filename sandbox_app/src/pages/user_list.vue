@@ -13,7 +13,7 @@
           @page-count="pageCount = $event"
         >
           <template v-slot:item.user_id="{ item }">
-            <UserEdit :user-id=item.user_id />
+            <UserEdit :user-id=item.user_id v-on:refresh="udpateUsers" />
             {{ item.user_id }}
           </template>
         </v-data-table>

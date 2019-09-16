@@ -69,7 +69,7 @@ export default {
       // API実行前にエラーをクリアする
       this.resetErrors();
 
-      this.postUser(this.username, this.email).then(user => {
+      this.putUser(this.userId, this.username, this.email).then(user => {
         console.log(user);
 
         // 後処理
@@ -102,7 +102,7 @@ export default {
         throw error;
       });
     },
-    postUser(username, email) {
+    putUser(userId, username, email) {
       const defaultClient = Sandbox.ApiClient.instance;
 
       const apiInstance = new Sandbox.UsersApi();
@@ -110,8 +110,8 @@ export default {
       body.username = username
       body.email = email
 
-      return apiInstance.postUser(body).then(data => {
-        console.log('API called successfully. UsersApi.postUser');
+      return apiInstance.putUser(userId, body).then(data => {
+        console.log('API called successfully. UsersApi.putUser');
         return data;
       }).catch(error => {
         console.error(error);
@@ -126,8 +126,6 @@ export default {
     },
     cleanUp() {
       // dataを初期化して、ダイアログを閉じる
-      this.username = "";
-      this.email = "";
       this.resetErrors();
 
       this.dialog = false;
@@ -136,11 +134,16 @@ export default {
       this.$emit("refresh");
     }
   },
-  created() {
-    this.getUser().then(user => {
-      this.username = user.username;
-      this.email = user.email;
-    })
+  watch: {
+    userId: {
+      handler() {
+        this.getUser().then(user => {
+          this.username = user.username;
+          this.email = user.email;
+        })
+      },
+      immediate: true
+    }
   }
 }
 </script>

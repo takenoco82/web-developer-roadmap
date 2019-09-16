@@ -493,6 +493,17 @@ exports.put_user = function (user_id, body) {
 
     if (user === undefined) {
       reject({ code: 404, payload: null });
+    } else if (users.filter(item => item.user_id !== user_id).some(item => item.email === body.email)) {
+      const payload = {
+        "errors": [
+          {
+            "code": "duplicated",
+            "field": "email",
+            "message": "Duplicated sent email."
+          }
+        ]
+      }
+      reject({ code: 400, payload: payload });
     } else {
       user.username = body.username;
       user.email = body.email;
