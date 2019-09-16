@@ -16,6 +16,7 @@
             <v-text-field
               v-model="username"
               label="user name"
+              :error-messages="errors.username"
               required
             ></v-text-field>
           </v-card-title>
@@ -23,10 +24,10 @@
             <v-text-field
               v-model="email"
               label="e-mail"
+              :error-messages="errors.email"
               required
             >
             </v-text-field>
-            <ErrorMessage v-bind:errors=errors field="email" />
           </v-card-text>
         </v-card>
       </v-form>
@@ -36,26 +37,38 @@
 
 <script>
 import Sandbox from "sandbox";
-import ErrorMessage from "@/components/ErrorMessage";
 
 export default {
   data() {
     return {
+      valid: true,
       username: "",
       email: "",
-      errors: []
+      // エラーメッセージ格納オブジェクト
+      errors: {
+        username: "",
+        email: ""
+      }
     }
   },
   methods: {
     save() {
       console.log("click save");
+
+      // API実行前にエラーをクリアする
+      this.resetErrors();
+
       this.postUser(this.username, this.email).then(user => {
         console.log(user);
         this.$router.push("/users");
       }).catch(error => {
         // TODO ホントは400 BadRequest の場合だけやるとか色々ある
         const errResponse = JSON.parse(error.response.text);
-        this.errors = errResponse.errors;
+        // APIからかえってきたエラーメッセージを設定
+        errResponse.errors.map(error => {
+          this.errors[error.field] = error.message;
+        });
+        console.log(this.errors);
       });
     },
     postUser(username, email) {
@@ -74,9 +87,12 @@ export default {
         throw error;
       });
     },
-  },
-  components: {
-    ErrorMessage
+    resetErrors() {
+      for (const field of Object.keys(this.errors)) {
+        this.errors[field] = "";
+      }
+      console.log(this.errors);
+    }
   }
 }
 </script>
