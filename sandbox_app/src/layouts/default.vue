@@ -21,7 +21,7 @@
             <v-list-item-title>About</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/users">
+        <v-list-item to="/user_list">
           <v-list-item-action>
             <v-icon>mdi-account-box</v-icon>
           </v-list-item-action>

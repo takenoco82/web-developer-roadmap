@@ -76,14 +76,8 @@
 
 <script>
 import Sandbox from "sandbox";
-import UserNew from "@/components/UserNew";
-import UserEdit from "@/components/UserEdit";
 
 export default {
-  components: {
-    UserNew,
-    UserEdit
-  },
   data() {
     return {
       dialog: false,
@@ -111,12 +105,10 @@ export default {
   },
   methods: {
     initialize() {
-      this.getUsers().then(users => {
+      this.callGetUsers().then(users => {
         this.users = users.map(user => {
-          user.url = `/user_list/${user.user_id}`;
           // username = 'Yvette Ebert' -> avatar_text = 'YE'
           user.avatar_text = user.username.split(" ").map(item => item.substring(0, 1)).join("");
-          user.action = "";
           return user;
         });
       });
@@ -129,14 +121,16 @@ export default {
       // this.dialog = true;
     },
     editItem(item) {
-      this.editedItem.userId = item.user_id;
-      this.editedItem.username = item.username;
-      this.editedItem.email = item.email;
-      this.dialog = true;
+      this.callGetUser(item.user_id).then(user => {
+        this.editedItem.userId = user.user_id;
+        this.editedItem.username = user.username;
+        this.editedItem.email = user.email;
+        this.dialog = true;
+      });
     },
     async deleteItem(item) {
       if (confirm('Are you sure you want to delete this item?')) {
-        await this.deleteUser(item.user_id);
+        await this.callDeleteUser(item.user_id);
         await this.initialize();
       }
     },
@@ -147,9 +141,9 @@ export default {
 
       try {
         if (this.editedItem.userId === "") {
-          const user = await this.postUser(this.editedItem);
+          const user = await this.callPostUser(this.editedItem);
         } else {
-          const user = await this.putUser(this.editedItem);
+          const user = await this.callPutUser(this.editedItem);
         }
 
         // 後処理
@@ -166,23 +160,26 @@ export default {
         console.log(this.errors);
       }
     },
-    getUsers() {
+    callGetUsers() {
       const defaultClient = Sandbox.ApiClient.instance;
-
-      // Configure API key authorization: api_key
-      const api_key = defaultClient.authentications['api_key'];
-      api_key.apiKey = "YOUR API KEY"
-      // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-      //api_key.apiKeyPrefix['api_key'] = "Token"
 
       const apiInstance = new Sandbox.UsersApi()
       const opts = {};
       return apiInstance.getUsers(opts).then(data => {
-        console.log('API called successfully. Returned data: ' + data);
+        console.log('API called successfully. UsersApi.getUsers');
         return data.users;
       });
     },
-    postUser(editedItem) {
+    callGetUser(userId) {
+      const defaultClient = Sandbox.ApiClient.instance;
+
+      const apiInstance = new Sandbox.UsersApi();
+      return apiInstance.getUser(userId).then(data => {
+        console.log('API called successfully. UsersApi.getUser');
+        return data;
+      });
+    },
+    callPostUser(editedItem) {
       const defaultClient = Sandbox.ApiClient.instance;
 
       const apiInstance = new Sandbox.UsersApi();
@@ -195,7 +192,7 @@ export default {
         return data;
       });
     },
-    putUser(editedItem) {
+    callPutUser(editedItem) {
       const defaultClient = Sandbox.ApiClient.instance;
 
       const apiInstance = new Sandbox.UsersApi();
@@ -208,7 +205,7 @@ export default {
         return data;
       });
     },
-    deleteUser(userId) {
+    callDeleteUser(userId) {
       const defaultClient = Sandbox.ApiClient.instance;
 
       const apiInstance = new Sandbox.UsersApi();
