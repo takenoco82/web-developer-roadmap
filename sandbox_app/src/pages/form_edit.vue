@@ -20,9 +20,9 @@ export default {
   data() {
     return {
       fields: {
-        name: null,
-        email: null,
-        hobbies: []
+        name: "alice",
+        email: "alice@example.com",
+        hobbies: [{ name: "aha", age: 12 }, { name: "ihi", age: 20 }]
       },
       errors: {
         name: null,
@@ -35,6 +35,9 @@ export default {
     };
   },
   methods: {
+    initilize() {
+      this.errors.hobbies = this.fields.hobbies.map(() => this.initalHobby());
+    },
     save(form) {
       console.log("save started.");
       this.initilizeObject(this.errors);
@@ -74,6 +77,9 @@ export default {
       });
       console.debug(obj);
     }
+  },
+  created() {
+    this.initilize();
   }
 };
 </script>
