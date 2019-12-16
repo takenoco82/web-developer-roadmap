@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <input-form
-      :initialData="fields"
-      :errors="errors"
+      :initial-value="fields"
+      :error-messages="errorMessages"
       @save-item="save"
-      @add-hobby="errors.hobbies.push(initalValueHobby())"
-      @remove-hobby="index => errors.hobbies.splice(index, 1)"
+      @add-hobby="errorMessages.hobbies.push(initalValueHobby())"
+      @remove-hobby="index => errorMessages.hobbies.splice(index, 1)"
     ></input-form>
   </v-container>
 </template>
@@ -19,8 +19,8 @@ export default {
   },
   data() {
     return {
-      fields: {},
-      errors: {},
+      fields: null,
+      errorMessages: null,
       initalValue: () => {
         return {
           name: null,
@@ -36,25 +36,25 @@ export default {
   methods: {
     initilize() {
       console.log("New page initilized.");
-      this.fields = this.initalValue();
-      this.errors = this.initalValue();
+      this.fields = Object.assign({}, this.initalValue());
+      this.errorMessages = Object.assign({}, this.initalValue());
     },
     save(form) {
       console.log("save started.");
-      this.initilizeObject(this.errors);
+      this.initilizeObject(this.errorMessages);
       console.debug(form);
       this.validate(form);
     },
     validate(form) {
       if (form.name === null || form.name.length === 0) {
-        this.errors.name = "required!";
+        this.errorMessages.name = "required!";
       }
       if (form.email === null || form.email.length === 0) {
-        this.errors.email = "required!";
+        this.errorMessages.email = "required!";
       }
       form.hobbies.forEach((item, i) => {
         if (item.name === null || item.name.length === 0) {
-          this.errors.hobbies[i].name = "required!";
+          this.errorMessages.hobbies[i].name = "required!";
         }
       });
     },

@@ -5,14 +5,14 @@
         <v-text-field
           label="name"
           v-model="fields.name"
-          :error-messages="errors.name"
+          :error-messages="errorMessages.name"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6" md="3">
         <v-text-field
           label="email"
           v-model="fields.email"
-          :error-messages="errors.email"
+          :error-messages="errorMessages.email"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -28,7 +28,7 @@
               label="hobby name"
               prepend-icon="delete"
               :value="item.name"
-              :error-messages="errors.hobbies[index].name"
+              :error-messages="errorMessages.hobbies[index].name"
               @input="updateHobby(index, 'name')"
               @click:prepend="removeHobby(index)"
             ></v-text-field>
@@ -37,7 +37,7 @@
             <v-text-field
               label="hobby age"
               :value="item.age"
-              :error-messages="errors.hobbies[index].age"
+              :error-messages="errorMessages.hobbies[index].age"
               @input="updateHobby(index, 'age')"
             ></v-text-field>
           </v-col>
@@ -55,8 +55,8 @@
 <script>
 export default {
   props: {
-    initialData: Object,
-    errors: Object
+    initialValue: Object,
+    errorMessages: Object
   },
   data() {
     return {
@@ -70,7 +70,10 @@ export default {
   methods: {
     initilize() {
       console.log("Input form initilized.");
-      this.fields = JSON.parse(JSON.stringify(this.initialData));
+      this.fields = Object.assign(
+        this.fields,
+        JSON.parse(JSON.stringify(this.initialValue))
+      );
     },
     addHobby() {
       console.log("Hobby added.");
