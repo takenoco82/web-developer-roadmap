@@ -4,7 +4,7 @@
       :initialData="fields"
       :errors="errors"
       @save-item="save"
-      @add-hobby="errors.hobbies.push(initalHobby())"
+      @add-hobby="errors.hobbies.push(initalValueHobby())"
       @remove-hobby="index => errors.hobbies.splice(index, 1)"
     ></input-form>
   </v-container>
@@ -19,24 +19,38 @@ export default {
   },
   data() {
     return {
-      fields: {
-        name: "alice",
-        email: "alice@example.com",
-        hobbies: [{ name: "aha", age: 12 }, { name: "ihi", age: 20 }]
+      fields: {},
+      errors: {},
+      initalValue: () => {
+        return {
+          name: null,
+          email: null,
+          hobbies: []
+        };
       },
-      errors: {
-        name: null,
-        email: null,
-        hobbies: []
-      },
-      initalHobby: () => {
+      initalValueHobby: () => {
         return { name: null, age: null };
       }
     };
   },
   methods: {
     initilize() {
-      this.errors.hobbies = this.fields.hobbies.map(() => this.initalHobby());
+      console.log("Edit page initilized.");
+      // fieldsの初期化
+      this.fields = this.initalValue();
+      Object.assign(this.fields, this.getInitialValue());
+      // errorsの初期化
+      this.errors = this.initalValue();
+      this.errors.hobbies = this.fields.hobbies.map(() =>
+        this.initalValueHobby()
+      );
+    },
+    getInitialValue() {
+      return {
+        name: "alice",
+        email: "alice@example.com",
+        hobbies: [{ name: "aha", age: 12 }, { name: "ihi", age: 20 }]
+      };
     },
     save(form) {
       console.log("save started.");

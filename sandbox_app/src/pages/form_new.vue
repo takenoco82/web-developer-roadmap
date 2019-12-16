@@ -4,7 +4,7 @@
       :initialData="fields"
       :errors="errors"
       @save-item="save"
-      @add-hobby="errors.hobbies.push(initalHobby())"
+      @add-hobby="errors.hobbies.push(initalValueHobby())"
       @remove-hobby="index => errors.hobbies.splice(index, 1)"
     ></input-form>
   </v-container>
@@ -19,22 +19,26 @@ export default {
   },
   data() {
     return {
-      fields: {
-        name: null,
-        email: null,
-        hobbies: []
+      fields: {},
+      errors: {},
+      initalValue: () => {
+        return {
+          name: null,
+          email: null,
+          hobbies: []
+        };
       },
-      errors: {
-        name: null,
-        email: null,
-        hobbies: []
-      },
-      initalHobby: () => {
+      initalValueHobby: () => {
         return { name: null, age: null };
       }
     };
   },
   methods: {
+    initilize() {
+      console.log("New page initilized.");
+      this.fields = this.initalValue();
+      this.errors = this.initalValue();
+    },
     save(form) {
       console.log("save started.");
       this.initilizeObject(this.errors);
@@ -71,6 +75,9 @@ export default {
       });
       console.debug(obj);
     }
+  },
+  created() {
+    this.initilize();
   }
 };
 </script>
