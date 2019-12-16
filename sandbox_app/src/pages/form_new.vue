@@ -4,7 +4,7 @@
       :initialData="fields"
       :errors="errors"
       @save-item="save"
-      @add-hobby="errors.hobbies.push(initalHobby)"
+      @add-hobby="errors.hobbies.push(initalHobby())"
       @remove-hobby="removeHobby"
     ></input-form>
   </v-container>
@@ -29,13 +29,16 @@ export default {
         email: null,
         hobbies: [{ name: null, age: null }, { name: null, age: null }]
       },
-      initalHobby: { name: null, age: null }
+      initalHobby: () => {
+        return { name: null, age: null };
+      }
     };
   },
   methods: {
     save(form) {
+      console.log("save started.");
       this.initilizeObject(this.errors);
-      console.log(form);
+      console.debug(form);
       this.validate(form);
     },
     removeHobby(index) {
@@ -57,18 +60,19 @@ export default {
     initilizeObject(obj) {
       Object.keys(obj).forEach(key => {
         if (obj[key] instanceof Array) {
-          console.log("Array", key);
+          console.debug("Array", key);
           obj[key].forEach(item => {
             this.initilizeObject(item);
           });
         } else if (obj[key] instanceof Object) {
-          console.log("Object", key);
+          console.debug("Object", key);
           this.initilizeObject(obj[key]);
         } else {
-          console.log("Primitive", key);
+          console.debug("Primitive", key);
           obj[key] = null;
         }
       });
+      console.debug(obj);
     }
   }
 };

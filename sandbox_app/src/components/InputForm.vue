@@ -69,23 +69,26 @@ export default {
   },
   methods: {
     initilize() {
+      console.log("Input form initilized.");
       this.fields = JSON.parse(JSON.stringify(this.initialData));
     },
     addHobby() {
+      console.log("Hobby added.");
       this.fields.hobbies.push({ name: null, age: null });
       this.$emit("add-hobby");
     },
     updateHobby(index, attr) {
-      console.log("updateHobby", index, attr, event.target.value);
-      console.log(this.fields.hobbies);
+      console.log("Hobby updated.", index, attr, event.target.value);
+      console.debug(this.fields.hobbies);
       this.fields.hobbies[index][attr] = event.target.value;
     },
     removeHobby(index) {
-      console.log("removeHobby clicked", index);
+      console.log("Hobby removed.", index);
       this.fields.hobbies.splice(index, 1);
       this.$emit("remove-hobby", index);
     },
     saveItem() {
+      console.log("save clicked.");
       this.$refs.form.resetValidation();
       this.$emit("save-item", this.fields);
     }
