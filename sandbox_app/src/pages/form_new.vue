@@ -5,7 +5,7 @@
       :errors="errors"
       @save-item="save"
       @add-hobby="errors.hobbies.push(initalHobby())"
-      @remove-hobby="removeHobby"
+      @remove-hobby="index => errors.hobbies.splice(index, 1)"
     ></input-form>
   </v-container>
 </template>
@@ -40,9 +40,6 @@ export default {
       this.initilizeObject(this.errors);
       console.debug(form);
       this.validate(form);
-    },
-    removeHobby(index) {
-      this.errors.hobbies.splice(index, 1);
     },
     validate(form) {
       if (form.name === null || form.name.length === 0) {
