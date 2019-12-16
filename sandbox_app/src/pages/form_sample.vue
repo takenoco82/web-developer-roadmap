@@ -16,7 +16,7 @@ export default {
       fields: {
         name: null,
         email: null,
-        hobbies: ["aha", "ihi"]
+        hobbies: [{ name: "aha", age: 12 }, { name: "ihi", age: 20 }]
       }
     };
   },

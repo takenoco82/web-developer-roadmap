@@ -17,11 +17,18 @@
         <v-row v-for="(item, index) in fields.hobbies" :key="index">
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              label="hobby"
+              label="hobby name"
               prepend-icon="delete"
-              :value="item"
-              @input="updateHobby(index)"
+              :value="item.name"
+              @input="updateHobby(index, 'name')"
               @click:prepend="removeHobby(index)"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              label="hobby age"
+              :value="item.age"
+              @input="updateHobby(index, 'age')"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -42,7 +49,11 @@ export default {
   },
   data() {
     return {
-      fields: null
+      fields: {
+        name: null,
+        email: null,
+        hobbies: []
+      }
     };
   },
   methods: {
@@ -50,12 +61,12 @@ export default {
       this.fields = JSON.parse(JSON.stringify(this.initialData));
     },
     addHobby() {
-      this.fields.hobbies.push("");
+      this.fields.hobbies.push({ name: null, age: null });
     },
-    updateHobby(index) {
-      console.log("updateHobby", event.target.value);
+    updateHobby(index, attr) {
+      console.log("updateHobby", index, attr, event.target.value);
       console.log(this.fields.hobbies);
-      this.fields.hobbies[index] = event.target.value;
+      this.fields.hobbies[index][attr] = event.target.value;
     },
     removeHobby(index) {
       console.log("removeHobby clicked", index);
