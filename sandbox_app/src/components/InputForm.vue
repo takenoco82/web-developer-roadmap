@@ -1,16 +1,24 @@
 <template>
-  <v-form>
+  <v-form ref="form">
     <v-row>
       <v-col cols="12" sm="6" md="3">
-        <v-text-field label="name" v-model="fields.name"></v-text-field>
+        <v-text-field
+          label="name"
+          v-model="fields.name"
+          :error-messages="errors.name"
+        ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6" md="3">
-        <v-text-field label="email" v-model="fields.email"></v-text-field>
+        <v-text-field
+          label="email"
+          v-model="fields.email"
+          :error-messages="errors.email"
+        ></v-text-field>
       </v-col>
     </v-row>
     <v-row>
       <v-container>
-        <p>hobby</p>
+        <span class="mr-2">hobby</span>
         <v-btn fab x-small color="primary" @click="addHobby">
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
@@ -20,6 +28,7 @@
               label="hobby name"
               prepend-icon="delete"
               :value="item.name"
+              :error-messages="errors.hobbies[index].name"
               @input="updateHobby(index, 'name')"
               @click:prepend="removeHobby(index)"
             ></v-text-field>
@@ -28,6 +37,7 @@
             <v-text-field
               label="hobby age"
               :value="item.age"
+              :error-messages="errors.hobbies[index].age"
               @input="updateHobby(index, 'age')"
             ></v-text-field>
           </v-col>
@@ -36,7 +46,7 @@
     </v-row>
     <v-row>
       <v-col cols="12" sm="6" md="3">
-        <v-btn @click="$emit('save-item', fields)" color="primary">save</v-btn>
+        <v-btn @click="saveItem" color="primary">save</v-btn>
       </v-col>
     </v-row>
   </v-form>
@@ -45,7 +55,8 @@
 <script>
 export default {
   props: {
-    initialData: Object
+    initialData: Object,
+    errors: Object
   },
   data() {
     return {
@@ -62,6 +73,7 @@ export default {
     },
     addHobby() {
       this.fields.hobbies.push({ name: null, age: null });
+      this.$emit("add-hobby");
     },
     updateHobby(index, attr) {
       console.log("updateHobby", index, attr, event.target.value);
@@ -71,6 +83,11 @@ export default {
     removeHobby(index) {
       console.log("removeHobby clicked", index);
       this.fields.hobbies.splice(index, 1);
+      this.$emit("remove-hobby", index);
+    },
+    saveItem() {
+      this.$refs.form.resetValidation();
+      this.$emit("save-item", this.fields);
     }
   },
   created() {
